@@ -144,6 +144,102 @@
         #submit-btn {
             background-color: #28a745; /* A distinct green for submission */
         }
+
+        @media (max-width: 768px) {
+            body {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+
+            .survey-title {
+                font-size: 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.25rem;
+            }
+
+            .question {
+                padding: 0.75rem;
+            }
+
+            /* Responsive Matrix Tables */
+            .matrix-table thead {
+                display: none;
+            }
+
+            .matrix-table tbody, .matrix-table tr {
+                border: none;
+            }
+
+            .matrix-table tr {
+                display: flex;
+                flex-wrap: wrap;
+                border-bottom: 1px solid var(--line-color);
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .matrix-table tr:last-child {
+                border-bottom: none;
+            }
+
+            .matrix-row-title {
+                flex: 1 0 100%; /* Take full width */
+                text-align: left;
+                margin-bottom: 0.5rem;
+                padding: 0;
+                border: none;
+                width: 100%;
+            }
+
+            .matrix-table td {
+                padding: 5px;
+                border: none;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Create a row for radio buttons */
+            .matrix-table td:not(.matrix-row-title) {
+                flex-grow: 1; /* Distribute space equally */
+            }
+
+            .matrix-table td:nth-of-type(2)::before { content: "1"; font-weight: bold; margin-bottom: 5px; }
+            .matrix-table td:nth-of-type(3)::before { content: "2"; font-weight: bold; margin-bottom: 5px; }
+            .matrix-table td:nth-of-type(4)::before { content: "3"; font-weight: bold; margin-bottom: 5px; }
+            .matrix-table td:nth-of-type(5)::before { content: "4"; font-weight: bold; margin-bottom: 5px; }
+            .matrix-table td:nth-of-type(6)::before { content: "5"; font-weight: bold; margin-bottom: 5px; }
+
+            /* Fix for other input groups */
+             .multiple-text-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+            
+            .multiple-text-item label {
+                flex-basis: auto;
+            }
+
+            /* Override inline styles for some inputs */
+            input[type="number"], input[type="text"] {
+                width: 100% !important;
+            }
+            
+             /* Stack navigation buttons */
+            #navigation-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            #navigation-controls button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -464,6 +560,10 @@
             <p><em>Su contribución es fundamental para construir un entorno laboral digital más saludable.</em></p>
         </div>
         <div id="form-status" style="display: none; text-align: center; margin-top: 1rem; padding: 1rem; background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24;"></div>
+        
+        <div style="text-align: center; margin-top: 2rem; font-size: 0.8rem;">
+            <a href="#" id="open_preferences_center">Update cookies preferences</a>
+        </div>
     </div>
 
     <script>
@@ -571,5 +671,16 @@
             showPage(0);
         });
     </script>
+    
+    <!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
+    <script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" charset="UTF-8"></script>
+    <script type="text/javascript" charset="UTF-8">
+    document.addEventListener('DOMContentLoaded', function () {
+    cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","palette":"dark","language":"es","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false,"website_name":"Cuestionario TFM"});
+    });
+    </script>
+    
+    <noscript>Free cookie consent management tool by <a href="https://www.termsfeed.com/">TermsFeed Generator</a></noscript>
+    <!-- End Cookie Consent by TermsFeed https://www.TermsFeed.com -->
 </body>
 </html>
