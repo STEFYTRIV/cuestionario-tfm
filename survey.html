@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario sobre Tecnoestrés y Bienestar Digital</title>
+    
+    <style>
+        /* Replicating the color scheme from the LaTeX document */
+        :root {
+            --primary-color: rgb(20, 90, 80);
+            --secondary-color: rgb(230, 245, 243);
+            --gray-text: rgb(80, 80, 80);
+            --line-color: rgb(179, 229, 222);
+            --font-family: "lmodern", sans-serif; /* A close web-safe equivalent */
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--gray-text);
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .survey-title {
+            color: var(--primary-color);
+            font-family: var(--font-family);
+            text-align: center;
+        }
+
+        .survey-description, .page-description {
+            color: var(--gray-text);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            color: var(--primary-color);
+            font-family: var(--font-family);
+            font-weight: bold;
+            border-bottom: 2px solid var(--line-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .question {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #fff;
+            border: 1px solid var(--line-color);
+            border-radius: 5px;
+        }
+
+        .question-title {
+            color: var(--primary-color);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+        
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--line-color);
+            border-radius: 4px;
+            box-sizing: border-box; /* Important */
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .radio-group label, .checkbox-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .multiple-text-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .multiple-text-item label {
+            flex-basis: 100px;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .matrix-table th, .matrix-table td {
+            text-align: center;
+            padding: 8px;
+            border: 1px solid var(--line-color);
+        }
+
+        .matrix-table th {
+            background-color: var(--secondary-color);
+        }
+
+        .matrix-row-title {
+            text-align: left;
+            width: 70%;
+        }
+
+        .matrix-group-title {
+            background-color: var(--secondary-color);
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .custom-instructions {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: var(--secondary-color);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        #navigation-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        #navigation-controls button {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        #navigation-controls button:hover {
+            opacity: 0.9;
+        }
+
+        #submit-btn {
+            background-color: #28a745; /* A distinct green for submission */
+        }
+    </style>
+</head>
+<body>
+    <div id="survey-root">
+        <h1 class="survey-title">Cuestionario sobre Tecnoestrés y Bienestar Digital</h1>
+        <p class="survey-description">Su contribución es fundamental para construir un entorno laboral digital más saludable. La información recopilada será tratada con la máxima confidencialidad y utilizada exclusivamente con fines de investigación para mejorar el bienestar en nuestra organización.</p>
+
+        <form id="native-survey-form" action="https://formspree.io/f/xpwrrlbp" method="POST" novalidate>
+            <!-- Page 0: Inicio -->
+            <div class="survey-page" data-page-name="inicio">
+                <div class="custom-instructions">
+                    <b>Instrucciones Generales:</b>
+                    <p>Por favor, responda a todas las preguntas de la manera más sincera y precisa posible. No hay respuestas correctas o incorrectas; nos interesa su percepción y experiencia personal. La información recopilada será utilizada exclusivamente con fines de investigación y para el diseño de estrategias de mejora del bienestar en la organización. Su anonimato está garantizado.</p>
+                    <b>Tiempo estimado para completar el cuestionario:</b> 25-35 minutos.
+                </div>
+            </div>
+
+            <!-- Page 1: Sección A -->
+            <div class="survey-page" data-page-name="seccion_a" style="display: none;">
+                <h2 class="page-title">Sección A: Información Demográfica y Contexto Laboral</h2>
+                <p class="page-description">Tiempo estimado para esta sección: 3-5 minutos</p>
+
+                <div class="question">
+                    <label class="question-title" for="edad">1. Edad:</label>
+                    <input type="number" id="edad" name="edad" min="18" max="100" style="width: 20%;">
+                </div>
+
+                <div class="question radio-group">
+                    <span class="question-title">2. Género:</span>
+                    <label><input type="radio" name="genero" value="Mujer"> Mujer</label>
+                    <label><input type="radio" name="genero" value="Hombre"> Hombre</label>
+                    <label><input type="radio" name="genero" value="Otro"> Otro</label>
+                    <label><input type="radio" name="genero" value="Prefiero no decirlo"> Prefiero no decirlo</label>
+                </div>
+                
+                <div class="question">
+                    <label class="question-title" for="departamento">3. Departamento/Área en la empresa:</label>
+                    <input type="text" id="departamento" name="departamento">
+                </div>
+
+                <div class="question multiple-text-group" data-group-name="antiguedad_empresa">
+                     <span class="question-title">4. Antigüedad en la empresa:</span>
+                     <div class="multiple-text-item"><label for="antiguedad_empresa_anos">Años</label><input type="number" name="antiguedad_empresa_anos" id="antiguedad_empresa_anos"></div>
+                     <div class="multiple-text-item"><label for="antiguedad_empresa_meses">Meses</label><input type="number" name="antiguedad_empresa_meses" id="antiguedad_empresa_meses"></div>
+                </div>
+
+                <div class="question multiple-text-group" data-group-name="antiguedad_puesto">
+                     <span class="question-title">5. Antigüedad en su puesto actual:</span>
+                     <div class="multiple-text-item"><label for="antiguedad_puesto_anos">Años</label><input type="number" name="antiguedad_puesto_anos" id="antiguedad_puesto_anos"></div>
+                     <div class="multiple-text-item"><label for="antiguedad_puesto_meses">Meses</label><input type="number" name="antiguedad_puesto_meses" id="antiguedad_puesto_meses"></div>
+                </div>
+
+                <div class="question">
+                    <label class="question-title" for="rol_puesto">6. Rol/Puesto actual:</label>
+                    <input type="text" id="rol_puesto" name="rol_puesto">
+                </div>
+
+                <div class="question radio-group">
+                    <span class="question-title">7. Nivel de responsabilidad:</span>
+                    <label><input type="radio" name="nivel_responsabilidad" value="Empleado/a sin personas a cargo"> Empleado/a sin personas a cargo</label>
+                    <label><input type="radio" name="nivel_responsabilidad" value="Mando intermedio/Jefe de equipo"> Mando intermedio/Jefe de equipo</label>
+                    <label><input type="radio" name="nivel_responsabilidad" value="Dirección"> Dirección</label>
+                </div>
+
+                <div class="question" id="personas_a_cargo_question" style="display:none;">
+                    <label class="question-title" for="personas_a_cargo">8. Número de personas a su cargo (si aplica):</label>
+                    <input type="number" id="personas_a_cargo" name="personas_a_cargo" style="width: 20%;">
+                </div>
+
+                <div class="question radio-group">
+                    <span class="question-title">9. Modalidad de trabajo principal:</span>
+                    <label><input type="radio" name="modalidad_trabajo" value="presencial"> Presencial 100%</label>
+                    <label><input type="radio" name="modalidad_trabajo" value="hibrido"> Híbrido</label>
+                    <label><input type="radio" name="modalidad_trabajo" value="remoto"> Remoto completo 100%</label>
+                </div>
+                
+                <div class="question multiple-text-group" data-group-name="porcentaje_hibrido" id="porcentaje_hibrido_question" style="display:none;">
+                     <span class="question-title">Indique porcentaje aproximado presencial/remoto:</span>
+                     <div class="multiple-text-item"><label for="porcentaje_hibrido_presencial">% Presencial</label><input type="number" name="porcentaje_hibrido_presencial" id="porcentaje_hibrido_presencial"></div>
+                     <div class="multiple-text-item"><label for="porcentaje_hibrido_remoto">% Remoto</label><input type="number" name="porcentaje_hibrido_remoto" id="porcentaje_hibrido_remoto"></div>
+                </div>
+
+                <div class="question">
+                    <label class="question-title" for="horas_digitales_dia">10. Número de horas aproximadas que utiliza dispositivos digitales (ordenador, móvil, tablet, etc.) para su trabajo principal al día:</label>
+                    <input type="number" id="horas_digitales_dia" name="horas_digitales_dia" style="width: 20%;">
+                </div>
+
+                <div class="question radio-group">
+                    <span class="question-title">11. ¿Utiliza sus dispositivos personales (móvil, ordenador) para tareas laborales?</span>
+                    <label><input type="radio" name="uso_dispositivos_personales" value="Nunca"> Nunca</label>
+                    <label><input type="radio" name="uso_dispositivos_personales" value="Raramente"> Raramente</label>
+                    <label><input type="radio" name="uso_dispositivos_personales" value="A veces"> A veces</label>
+                    <label><input type="radio" name="uso_dispositivos_personales" value="Frecuentemente"> Frecuentemente</label>
+                    <label><input type="radio" name="uso_dispositivos_personales" value="Siempre"> Siempre</label>
+                </div>
+            </div>
+
+            <!-- Page 2: Sección B -->
+            <div class="survey-page" data-page-name="seccion_b" style="display: none;">
+                 <h2 class="page-title">Sección B: Experiencias y Percepciones sobre el Uso de TIC en el Trabajo</h2>
+                 <p class="page-description">Tiempo estimado para esta sección: 5-7 minutos</p>
+
+                 <div class="question">
+                    <span class="question-title">Por favor, indique su grado de acuerdo o desacuerdo con las siguientes afirmaciones (1=Totalmente en desacuerdo, 5=Totalmente de acuerdo):</span>
+                    <table class="matrix-table" data-matrix-name="experiencias_percepciones_tic">
+                        <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+                        <tbody>
+                            <tr><td class="matrix-row-title">B1. Las TIC (software, plataformas) que utilizo habitualmente en mi trabajo son, en general, fáciles de usar e intuitivas.</td>
+                                <td><input type="radio" name="B1" value="1"></td><td><input type="radio" name="B1" value="2"></td><td><input type="radio" name="B1" value="3"></td><td><input type="radio" name="B1" value="4"></td><td><input type="radio" name="B1" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B2. Recibí una formación inicial adecuada cuando se introdujeron las principales TIC que uso.</td>
+                                <td><input type="radio" name="B2" value="1"></td><td><input type="radio" name="B2" value="2"></td><td><input type="radio" name="B2" value="3"></td><td><input type="radio" name="B2" value="4"></td><td><input type="radio" name="B2" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B3. Cuando hay actualizaciones o se introducen nuevas TIC, recibo formación y/o información clara y suficiente.</td>
+                                <td><input type="radio" name="B3" value="1"></td><td><input type="radio" name="B3" value="2"></td><td><input type="radio" name="B3" value="3"></td><td><input type="radio" name="B3" value="4"></td><td><input type="radio" name="B3" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B4. Siento que tengo las habilidades y conocimientos necesarios para manejar eficientemente las TIC requeridas en mi puesto.</td>
+                                <td><input type="radio" name="B4" value="1"></td><td><input type="radio" name="B4" value="2"></td><td><input type="radio" name="B4" value="3"></td><td><input type="radio" name="B4" value="4"></td><td><input type="radio" name="B4" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B5. Las TIC disponibles me ayudan a ser más productivo/a y eficiente en mis tareas.</td>
+                                <td><input type="radio" name="B5" value="1"></td><td><input type="radio" name="B5" value="2"></td><td><input type="radio" name="B5" value="3"></td><td><input type="radio" name="B5" value="4"></td><td><input type="radio" name="B5" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B6. Las TIC facilitan la comunicación efectiva con mis compañeros/as de equipo.</td>
+                                <td><input type="radio" name="B6" value="1"></td><td><input type="radio" name="B6" value="2"></td><td><input type="radio" name="B6" value="3"></td><td><input type="radio" name="B6" value="4"></td><td><input type="radio" name="B6" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B7. Las TIC facilitan la comunicación efectiva con mi superior/responsable.</td>
+                                <td><input type="radio" name="B7" value="1"></td><td><input type="radio" name="B7" value="2"></td><td><input type="radio" name="B7" value="3"></td><td><input type="radio" name="B7" value="4"></td><td><input type="radio" name="B7" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B8. Las TIC facilitan la colaboración en proyectos y tareas de equipo.</td>
+                                <td><input type="radio" name="B8" value="1"></td><td><input type="radio" name="B8" value="2"></td><td><input type="radio" name="B8" value="3"></td><td><input type="radio" name="B8" value="4"></td><td><input type="radio" name="B8" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B9. Considero que el soporte técnico (IT) disponible en la empresa es rápido y eficiente cuando tengo problemas con las TIC.</td>
+                                <td><input type="radio" name="B9" value="1"></td><td><input type="radio" name="B9" value="2"></td><td><input type="radio" name="B9" value="3"></td><td><input type="radio" name="B9" value="4"></td><td><input type="radio" name="B9" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B10. Las TIC me permiten acceder a la información que necesito para mi trabajo de manera rápida y sencilla.</td>
+                                <td><input type="radio" name="B10" value="1"></td><td><input type="radio" name="B10" value="2"></td><td><input type="radio" name="B10" value="3"></td><td><input type="radio" name="B10" value="4"></td><td><input type="radio" name="B10" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B11. Tengo un grado de autonomía suficiente para decidir cómo y cuándo utilizar ciertas TIC para organizar mi trabajo.</td>
+                                <td><input type="radio" name="B11" value="1"></td><td><input type="radio" name="B11" value="2"></td><td><input type="radio" name="B11" value="3"></td><td><input type="radio" name="B11" value="4"></td><td><input type="radio" name="B11" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">B12. Las herramientas digitales que usamos están bien integradas entre sí (no requieren duplicar información o procesos).</td>
+                                <td><input type="radio" name="B12" value="1"></td><td><input type="radio" name="B12" value="2"></td><td><input type="radio" name="B12" value="3"></td><td><input type="radio" name="B12" value="4"></td><td><input type="radio" name="B12" value="5"></td></tr>
+                        </tbody>
+                    </table>
+                 </div>
+
+                 <div class="question">
+                    <label class="question-title" for="herramientas_utiles">B13. ¿Cuáles son las 2-3 herramientas o plataformas digitales que considera MÁS ÚTILES O BENEFICIOSAS para su trabajo diario y por qué?</label>
+                    <textarea id="herramientas_utiles" name="herramientas_utiles"></textarea>
+                </div>
+                 <div class="question">
+                    <label class="question-title" for="herramientas_dificiles">B14. ¿Cuáles son las 2-3 herramientas o plataformas digitales que le generan MAYORES DIFICULTADES, FRUSTRACIÓN o PÉRDIDA DE TIEMPO y por qué?</label>
+                    <textarea id="herramientas_dificiles" name="herramientas_dificiles"></textarea>
+                </div>
+            </div>
+
+            <!-- Page 3: Sección C -->
+            <div class="survey-page" data-page-name="seccion_c" style="display: none;">
+                <h2 class="page-title">Sección C: Identificación de Riesgos Psicosociales Específicos (Dimensiones del Tecnoestrés)</h2>
+                <p class="page-description">Tiempo estimado para esta sección: 7-10 minutos</p>
+
+                <div class="question">
+                    <span class="question-title">Por favor, indique con qué frecuencia experimenta las siguientes situaciones o sentimientos relacionados con el uso de la tecnología en su trabajo (1=Nunca, 5=Muy frecuentemente / Siempre):</span>
+                    <table class="matrix-table" data-matrix-name="riesgos_psicosociales">
+                        <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+                        <tbody>
+                            <tr><td colspan="6" class="matrix-group-title">C1. Tecno-sobrecarga</td></tr>
+                            <tr><td class="matrix-row-title">C1.1. Me siento abrumado/a por la cantidad de correos electrónicos que debo gestionar.</td><td><input type="radio" name="C1.1" value="1"></td><td><input type="radio" name="C1.1" value="2"></td><td><input type="radio" name="C1.1" value="3"></td><td><input type="radio" name="C1.1" value="4"></td><td><input type="radio" name="C1.1" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C1.2. Me siento abrumado/a por la cantidad de mensajes instantáneos (chats) y notificaciones que recibo.</td><td><input type="radio" name="C1.2" value="1"></td><td><input type="radio" name="C1.2" value="2"></td><td><input type="radio" name="C1.2" value="3"></td><td><input type="radio" name="C1.2" value="4"></td><td><input type="radio" name="C1.2" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C1.3. Las interrupciones constantes de las TIC dificultan mi concentración en tareas importantes.</td><td><input type="radio" name="C1.3" value="1"></td><td><input type="radio" name="C1.3" value="2"></td><td><input type="radio" name="C1.3" value="3"></td><td><input type="radio" name="C1.3" value="4"></td><td><input type="radio" name="C1.3" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C1.4. Siento que tengo que trabajar más rápido y/o durante más tiempo debido al uso de la tecnología.</td><td><input type="radio" name="C1.4" value="1"></td><td><input type="radio" name="C1.4" value="2"></td><td><input type="radio" name="C1.4" value="3"></td><td><input type="radio" name="C1.4" value="4"></td><td><input type="radio" name="C1.4" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C1.5. Las TIC me obligan a realizar múltiples tareas digitales simultáneamente (multitasking), lo que me resulta agotador.</td><td><input type="radio" name="C1.5" value="1"></td><td><input type="radio" name="C1.5" value="2"></td><td><input type="radio" name="C1.5" value="3"></td><td><input type="radio" name="C1.5" value="4"></td><td><input type="radio" name="C1.5" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C1.6. La cantidad de información digital que debo revisar para estar al día con mi trabajo es excesiva.</td><td><input type="radio" name="C1.6" value="1"></td><td><input type="radio" name="C1.6" value="2"></td><td><input type="radio" name="C1.6" value="3"></td><td><input type="radio" name="C1.6" value="4"></td><td><input type="radio" name="C1.6" value="5"></td></tr>
+
+                            <tr><td colspan="6" class="matrix-group-title">C2. Tecno-invasión</td></tr>
+                            <tr><td class="matrix-row-title">C2.1. Siento la expectativa (explícita o implícita) de estar conectado/a y disponible fuera de mi horario laboral.</td><td><input type="radio" name="C2.1" value="1"></td><td><input type="radio" name="C2.1" value="2"></td><td><input type="radio" name="C2.1" value="3"></td><td><input type="radio" name="C2.1" value="4"></td><td><input type="radio" name="C2.1" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C2.2. Recibo comunicaciones de trabajo (correos, mensajes) en mis dispositivos personales fuera de mi horario laboral.</td><td><input type="radio" name="C2.2" value="1"></td><td><input type="radio" name="C2.2" value="2"></td><td><input type="radio" name="C2.2" value="3"></td><td><input type="radio" name="C2.2" value="4"></td><td><input type="radio" name="C2.2" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C2.3. Reviso o respondo comunicaciones de trabajo durante mis tiempos de descanso (pausas, fines de semana, vacaciones).</td><td><input type="radio" name="C2.3" value="1"></td><td><input type="radio" name="C2.3" value="2"></td><td><input type="radio" name="C2.3" value="3"></td><td><input type="radio" name="C2.3" value="4"></td><td><input type="radio" name="C2.3" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C2.4. Me resulta difícil 'desconectar mentalmente' del trabajo al finalizar la jornada debido a la tecnología.</td><td><input type="radio" name="C2.4" value="1"></td><td><input type="radio" name="C2.4" value="2"></td><td><input type="radio" name="C2.4" value="3"></td><td><input type="radio" name="C2.4" value="4"></td><td><input type="radio" name="C2.4" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C2.5. La tecnología difumina los límites entre mi vida laboral y mi vida personal.</td><td><input type="radio" name="C2.5" value="1"></td><td><input type="radio" name="C2.5" value="2"></td><td><input type="radio" name="C2.5" value="3"></td><td><input type="radio" name="C2.5" value="4"></td><td><input type="radio" name="C2.5" value="5"></td></tr>
+
+                            <tr><td colspan="6" class="matrix-group-title">C3. Tecno-complejidad</td></tr>
+                            <tr><td class="matrix-row-title">C3.1. Me siento incompetente o inseguro/a al utilizar nuevas tecnologías o programas que se implementan.</td><td><input type="radio" name="C3.1" value="1"></td><td><input type="radio" name="C3.1" value="2"></td><td><input type="radio" name="C3.1" value="3"></td><td><input type="radio" name="C3.1" value="4"></td><td><input type="radio" name="C3.1" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C3.2. Encuentro que algunas tecnologías que debo usar son demasiado complicadas o poco intuitivas.</td><td><input type="radio" name="C3.2" value="1"></td><td><input type="radio" name="C3.2" value="2"></td><td><input type="radio" name="C3.2" value="3"></td><td><input type="radio" name="C3.2" value="4"></td><td><input type="radio" name="C3.2" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C3.3. Invierto una cantidad de tiempo considerable en aprender a usar nuevas herramientas o funcionalidades tecnológicas.</td><td><input type="radio" name="C3.3" value="1"></td><td><input type="radio" name="C3.3" value="2"></td><td><input type="radio" name="C3.3" value="3"></td><td><input type="radio" name="C3.3" value="4"></td><td><input type="radio" name="C3.3" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C3.4. Paso mucho tiempo intentando solucionar problemas técnicos o errores de las TIC por mi cuenta.</td><td><input type="radio" name="C3.4" value="1"></td><td><input type="radio" name="C3.4" value="2"></td><td><input type="radio" name="C3.4" value="3"></td><td><input type="radio" name="C3.4" value="4"></td><td><input type="radio" name="C3.4" value="5"></td></tr>
+
+                            <tr><td colspan="6" class="matrix-group-title">C4. Tecno-inseguridad</td></tr>
+                            <tr><td class="matrix-row-title">C4.1. Me preocupa que mis habilidades tecnológicas actuales no sean suficientes para las demandas futuras de mi puesto o del mercado laboral.</td><td><input type="radio" name="C4.1" value="1"></td><td><input type="radio" name="C4.1" value="2"></td><td><input type="radio" name="C4.1" value="3"></td><td><input type="radio" name="C4.1" value="4"></td><td><input type="radio" name="C4.1" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C4.2. Temo cometer errores significativos en mi trabajo debido a un mal uso o fallo de la tecnología.</td><td><input type="radio" name="C4.2" value="1"></td><td><input type="radio" name="C4.2" value="2"></td><td><input type="radio" name="C4.2" value="3"></td><td><input type="radio" name="C4.2" value="4"></td><td><input type="radio" name="C4.2" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C4.3. Me preocupa que la automatización o la inteligencia artificial puedan reemplazar aspectos importantes de mi trabajo.</td><td><input type="radio" name="C4.3" value="1"></td><td><input type="radio" name="C4.3" value="2"></td><td><input type="radio" name="C4.3" value="3"></td><td><input type="radio" name="C4.3" value="4"></td><td><input type="radio" name="C4.3" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C4.4. Siento presión por estar constantemente actualizando mis competencias digitales.</td><td><input type="radio" name="C4.4" value="1"></td><td><input type="radio" name="C4.4" value="2"></td><td><input type="radio" name="C4.4" value="3"></td><td><input type="radio" name="C4.4" value="4"></td><td><input type="radio" name="C4.4" value="5"></td></tr>
+
+                            <tr><td colspan="6" class="matrix-group-title">C5. Tecno-incertidumbre</td></tr>
+                            <tr><td class="matrix-row-title">C5.1. Me siento ansioso/a o estresado/a por la rapidez con la que cambian las tecnologías que debo usar.</td><td><input type="radio" name="C5.1" value="1"></td><td><input type="radio" name="C5.1" value="2"></td><td><input type="radio" name="C5.1" value="3"></td><td><input type="radio" name="C5.1" value="4"></td><td><input type="radio" name="C5.1" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C5.2. A menudo no tengo claro cómo las nuevas tecnologías o actualizaciones afectarán mis tareas y responsabilidades.</td><td><input type="radio" name="C5.2" value="1"></td><td><input type="radio" name="C5.2" value="2"></td><td><input type="radio" name="C5.2" value="3"></td><td><input type="radio" name="C5.2" value="4"></td><td><input type="radio" name="C5.2" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C5.3. La falta de información clara o formación adecuada sobre nuevas implementaciones tecnológicas me genera estrés.</td><td><input type="radio" name="C5.3" value="1"></td><td><input type="radio" name="C5.3" value="2"></td><td><input type="radio" name="C5.3" value="3"></td><td><input type="radio" name="C5.3" value="4"></td><td><input type="radio" name="C5.3" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">C5.4. Me resulta difícil adaptarme a los cambios frecuentes en los sistemas o software que utilizamos.</td><td><input type="radio" name="C5.4" value="1"></td><td><input type="radio" name="C5.4" value="2"></td><td><input type="radio" name="C5.4" value="3"></td><td><input type="radio" name="C5.4" value="4"></td><td><input type="radio" name="C5.4" value="5"></td></tr>
+                           
+                            <tr><td colspan="6" class="matrix-group-title"></td></tr>
+                             <tr><td class="matrix-row-title">C6. En general, ¿cómo valoraría su nivel de tecnoestrés en el trabajo? (1=Muy bajo, 5=Muy alto)</td><td><input type="radio" name="C6" value="1"></td><td><input type="radio" name="C6" value="2"></td><td><input type="radio" name="C6" value="3"></td><td><input type="radio" name="C6" value="4"></td><td><input type="radio" name="C6" value="5"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                 <div class="question">
+                    <label class="question-title" for="situacion_tecnoestres">C7. Describa brevemente alguna situación específica en la que haya sentido un nivel elevado de tecnoestrés y qué factores cree que contribuyeron a ello.</label>
+                    <textarea id="situacion_tecnoestres" name="situacion_tecnoestres"></textarea>
+                </div>
+            </div>
+
+            <!-- Page 4: Sección D -->
+            <div class="survey-page" data-page-name="seccion_d" style="display: none;">
+                <h2 class="page-title">Sección D: Consecuencias Psicosociales y Organizacionales Percibidas</h2>
+                <p class="page-description">Tiempo estimado para esta sección: 4-6 minutos</p>
+                <div class="question">
+                     <span class="question-title">En relación con el uso de la tecnología y su experiencia laboral en los últimos 3-6 meses, por favor indique con qué frecuencia ha experimentado lo siguiente (1=Nunca, 5=Muy frecuentemente / Siempre):</span>
+                    <table class="matrix-table" data-matrix-name="consecuencias_percibidas">
+                        <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+                         <tbody>
+                            <tr><td colspan="6" class="matrix-group-title">D1. A nivel individual: Salud y Bienestar</td></tr>
+                            <tr><td class="matrix-row-title">D1.1. Fatiga visual, ojos secos o dolores de cabeza.</td><td><input type="radio" name="D1.1" value="1"></td><td><input type="radio" name="D1.1" value="2"></td><td><input type="radio" name="D1.1" value="3"></td><td><input type="radio" name="D1.1" value="4"></td><td><input type="radio" name="D1.1" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D1.2. Dolores musculares o articulares (espalda, cuello, hombros, muñecas).</td><td><input type="radio" name="D1.2" value="1"></td><td><input type="radio" name="D1.2" value="2"></td><td><input type="radio" name="D1.2" value="3"></td><td><input type="radio" name="D1.2" value="4"></td><td><input type="radio" name="D1.2" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D1.3. Dificultad para concentrarse o mantener la atención.</td><td><input type="radio" name="D1.3" value="1"></td><td><input type="radio" name="D1.3" value="2"></td><td><input type="radio" name="D1.3" value="3"></td><td><input type="radio" name="D1.3" value="4"></td><td><input type="radio" name="D1.3" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D1.4. Sensación de agotamiento mental al final de la jornada laboral.</td><td><input type="radio" name="D1.4" value="1"></td><td><input type="radio" name="D1.4" value="2"></td><td><input type="radio" name="D1.4" value="3"></td><td><input type="radio" name="D1.4" value="4"></td><td><input type="radio" name="D1.4" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D1.5. Irritabilidad, frustración o nerviosismo.</td><td><input type="radio" name="D1.5" value="1"></td><td><input type="radio" name="D1.5" value="2"></td><td><input type="radio" name="D1.5" value="3"></td><td><input type="radio" name="D1.5" value="4"></td><td><input type="radio" name="D1.5" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D1.6. Problemas para conciliar el sueño o sueño poco reparador.</td><td><input type="radio" name="D1.6" value="1"></td><td><input type="radio" name="D1.6" value="2"></td><td><input type="radio" name="D1.6" value="3"></td><td><input type="radio" name="D1.6" value="4"></td><td><input type="radio" name="D1.6" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D1.7. Sentimientos de ansiedad o angustia relacionados con el trabajo.</td><td><input type="radio" name="D1.7" value="1"></td><td><input type="radio" name="D1.7" value="2"></td><td><input type="radio" name="D1.7" value="3"></td><td><input type="radio" name="D1.7" value="4"></td><td><input type="radio" name="D1.7" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D1.8. Disminución de su satisfacción general con el trabajo.</td><td><input type="radio" name="D1.8" value="1"></td><td><input type="radio" name="D1.8" value="2"></td><td><input type="radio" name="D1.8" value="3"></td><td><input type="radio" name="D1.8" value="4"></td><td><input type="radio" name="D1.8" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D1.9. Sensación de aislamiento social, incluso trabajando en equipo.</td><td><input type="radio" name="D1.9" value="1"></td><td><input type="radio" name="D1.9" value="2"></td><td><input type="radio" name="D1.9" value="3"></td><td><input type="radio" name="D1.9" value="4"></td><td><input type="radio" name="D1.9" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D1.10. Dificultad para equilibrar su vida personal/familiar con las demandas del trabajo.</td><td><input type="radio" name="D1.10" value="1"></td><td><input type="radio" name="D1.10" value="2"></td><td><input type="radio" name="D1.10" value="3"></td><td><input type="radio" name="D1.10" value="4"></td><td><input type="radio" name="D1.10" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D1.11. Necesidad de consumir cafeína u otros estimulantes para mantener el ritmo.</td><td><input type="radio" name="D1.11" value="1"></td><td><input type="radio" name="D1.11" value="2"></td><td><input type="radio" name="D1.11" value="3"></td><td><input type="radio" name="D1.11" value="4"></td><td><input type="radio" name="D1.11" value="5"></td></tr>
+                            
+                            <tr><td colspan="6" class="matrix-group-title">D2. A nivel organizacional</td></tr>
+                            <tr><td class="matrix-row-title">D2.1. Disminución de la productividad general del equipo/departamento.</td><td><input type="radio" name="D2.1" value="1"></td><td><input type="radio" name="D2.1" value="2"></td><td><input type="radio" name="D2.1" value="3"></td><td><input type="radio" name="D2.1" value="4"></td><td><input type="radio" name="D2.1" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D2.2. Aumento en la frecuencia de errores o descuidos en el trabajo.</td><td><input type="radio" name="D2.2" value="1"></td><td><input type="radio" name="D2.2" value="2"></td><td><input type="radio" name="D2.2" value="3"></td><td><input type="radio" name="D2.2" value="4"></td><td><input type="radio" name="D2.2" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D2.3. Dificultades en la comunicación o malentendidos entre compañeros/as.</td><td><input type="radio" name="D2.3" value="1"></td><td><input type="radio" name="D2.3" value="2"></td><td><input type="radio" name="D2.3" value="3"></td><td><input type="radio" name="D2.3" value="4"></td><td><input type="radio" name="D2.3" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D2.4. Deterioro del ambiente laboral (más tenso, menos colaborativo).</td><td><input type="radio" name="D2.4" value="1"></td><td><input type="radio" name="D2.4" value="2"></td><td><input type="radio" name="D2.4" value="3"></td><td><input type="radio" name="D2.4" value="4"></td><td><input type="radio" name="D2.4" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D2.5. Aumento de quejas o expresiones de malestar entre compañeros/as sobre la carga de trabajo digital.</td><td><input type="radio" name="D2.5" value="1"></td><td><input type="radio" name="D2.5" value="2"></td><td><input type="radio" name="D2.5" value="3"></td><td><input type="radio" name="D2.5" value="4"></td><td><input type="radio" name="D2.5" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">D2.6. Percepción de un mayor presentismo digital (estar siempre conectado) que los resultados efectivos del trabajo.</td><td><input type="radio" name="D2.6" value="1"></td><td><input type="radio" name="D2.6" value="2"></td><td><input type="radio" name="D2.6" value="3"></td><td><input type="radio" name="D2.6" value="4"></td><td><input type="radio" name="D2.6" value="5"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <div class="question">
+                    <label class="question-title" for="impacto_bienestar_general">D3. ¿Considera que el uso intensivo de la tecnología en su trabajo ha afectado positiva o negativamente su bienestar general en el último año? Por favor, explique brevemente su respuesta.</label>
+                    <textarea id="impacto_bienestar_general" name="impacto_bienestar_general"></textarea>
+                </div>
+            </div>
+
+            <!-- Page 5: Sección E -->
+            <div class="survey-page" data-page-name="seccion_e" style="display: none;">
+                <h2 class="page-title">Sección E: Cultura Organizacional y Soporte Social en el Entorno Digital</h2>
+                <p class="page-description">Tiempo estimado para esta sección: 3-4 minutos</p>
+
+                <div class="question">
+                    <span class="question-title">Por favor, indique su grado de acuerdo o desacuerdo con las siguientes afirmaciones sobre su entorno de trabajo (1=Totalmente en desacuerdo, 5=Totalmente de acuerdo):</span>
+                     <table class="matrix-table" data-matrix-name="cultura_organizacional">
+                        <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+                        <tbody>
+                            <tr><td class="matrix-row-title">E1. Mi superior/responsable directo se preocupa por mi bienestar en relación con el uso de la tecnología.</td>
+                                <td><input type="radio" name="E1" value="1"></td><td><input type="radio" name="E1" value="2"></td><td><input type="radio" name="E1" value="3"></td><td><input type="radio" name="E1" value="4"></td><td><input type="radio" name="E1" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">E2. Mi superior/responsable directo fomenta activamente el respeto al derecho a la desconexión digital.</td>
+                                <td><input type="radio" name="E2" value="1"></td><td><input type="radio" name="E2" value="2"></td><td><input type="radio" name="E2" value="3"></td><td><input type="radio" name="E2" value="4"></td><td><input type="radio" name="E2" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">E3. En mi equipo, existe una cultura de respeto hacia los tiempos de desconexión de los compañeros/as.</td>
+                                <td><input type="radio" name="E3" value="1"></td><td><input type="radio" name="E3" value="2"></td><td><input type="radio" name="E3" value="3"></td><td><input type="radio" name="E3" value="4"></td><td><input type="radio" name="E3" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">E4. Siento que puedo hablar abiertamente con mi superior sobre el estrés relacionado con la tecnología sin temor a represalias.</td>
+                                <td><input type="radio" name="E4" value="1"></td><td><input type="radio" name="E4" value="2"></td><td><input type="radio" name="E4" value="3"></td><td><input type="radio" name="E4" value="4"></td><td><input type="radio" name="E4" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">E5. La empresa comunica de forma clara las políticas y expectativas sobre el uso de TIC y la desconexión digital.</td>
+                                <td><input type="radio" name="E5" value="1"></td><td><input type="radio" name="E5" value="2"></td><td><input type="radio" name="E5" value="3"></td><td><input type="radio" name="E5" value="4"></td><td><input type="radio" name="E5" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">E6. Se nos anima a tomar pausas regulares cuando trabajamos intensamente con pantallas.</td>
+                                <td><input type="radio" name="E6" value="1"></td><td><input type="radio" name="E6" value="2"></td><td><input type="radio" name="E6" value="3"></td><td><input type="radio" name="E6" value="4"></td><td><input type="radio" name="E6" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">E7. Cuento con el apoyo de mis compañeros/as si tengo dificultades con alguna herramienta tecnológica.</td>
+                                <td><input type="radio" name="E7" value="1"></td><td><input type="radio" name="E7" value="2"></td><td><input type="radio" name="E7" value="3"></td><td><input type="radio" name="E7" value="4"></td><td><input type="radio" name="E7" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">E8. La carga de trabajo digital se distribuye de manera equitativa en mi equipo.</td>
+                                <td><input type="radio" name="E8" value="1"></td><td><input type="radio" name="E8" value="2"></td><td><input type="radio" name="E8" value="3"></td><td><input type="radio" name="E8" value="4"></td><td><input type="radio" name="E8" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">E9. La organización valora más la 'presencia digital' (estar siempre conectado) que los resultados efectivos del trabajo.</td>
+                                <td><input type="radio" name="E9" value="1"></td><td><input type="radio" name="E9" value="2"></td><td><input type="radio" name="E9" value="3"></td><td><input type="radio" name="E9" value="4"></td><td><input type="radio" name="E9" value="5"></td></tr>
+                            <tr><td class="matrix-row-title">E10. Se promueven activamente prácticas de trabajo digital saludables en la organización.</td>
+                                <td><input type="radio" name="E10" value="1"></td><td><input type="radio" name="E10" value="2"></td><td><input type="radio" name="E10" value="3"></td><td><input type="radio" name="E10" value="4"></td><td><input type="radio" name="E10" value="5"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Page 6: Sección F -->
+            <div class="survey-page" data-page-name="seccion_f" style="display: none;">
+                <h2 class="page-title">Sección F: Necesidades, Expectativas y Propuestas de Mejora</h2>
+                <p class="page-description">Tiempo estimado para esta sección: 5-7 minutos</p>
+
+                <div class="question"><label class="question-title" for="apoyo_formacion">F1. ¿Qué tipo de APOYO O FORMACIÓN específica considera que sería más útil para usted y sus compañeros/as para manejar mejor las TIC y reducir el tecnoestrés?</label><textarea id="apoyo_formacion" name="apoyo_formacion"></textarea></div>
+                <div class="question"><label class="question-title" for="medidas_organizacion">F2. ¿Qué MEDIDAS CONCRETAS podría tomar la ORGANIZACIÓN para reducir el tecnoestrés y mejorar el bienestar digital?</label><textarea id="medidas_organizacion" name="medidas_organizacion"></textarea></div>
+                <div class="question"><label class="question-title" for="practicas_personales">F3. ¿Existen PRÁCTICAS O HERRAMIENTAS PERSONALES que usted utiliza para gestionar la sobrecarga de información, las interrupciones digitales o para asegurar su desconexión? ¿Podría compartirlas?</label><textarea id="practicas_personales" name="practicas_personales"></textarea></div>
+                
+                <div class="question" data-panel-name="desconexion_digital">
+                    <span class="question-title">F4. En relación con el DERECHO A LA DESCONEXIÓN DIGITAL:</span>
+                    <div class="question radio-group" style="border: none; padding: 0; margin-top: 1rem;">
+                        <span class="question-title" style="font-weight: normal;">a) ¿Conoce la política de la empresa al respecto (si existe)?</span>
+                        <label><input type="radio" name="conocimiento_politica" value="Sí"> Sí</label>
+                        <label><input type="radio" name="conocimiento_politica" value="No"> No</label>
+                        <label><input type="radio" name="conocimiento_politica" value="Parcialmente"> Parcialmente</label>
+                    </div>
+                    <div class="question radio-group" style="border: none; padding: 0; margin-top: 1rem;">
+                        <span class="question-title" style="font-weight: normal;">b) ¿Considera que se respeta en la práctica?</span>
+                        <label><input type="radio" name="respeto_politica" value="Siempre"> Siempre</label>
+                        <label><input type="radio" name="respeto_politica" value="Casi siempre"> Casi siempre</label>
+                        <label><input type="radio" name="respeto_politica" value="A veces"> A veces</label>
+                        <label><input type="radio" name="respeto_politica" value="Raramente"> Raramente</label>
+                        <label><input type="radio" name="respeto_politica" value="Nunca"> Nunca</label>
+                    </div>
+                    <div class="question" style="border: none; padding: 0; margin-top: 1rem;">
+                        <label class="question-title" style="font-weight: normal;" for="mejora_politica">c) ¿Qué se podría mejorar específicamente en este ámbito?</label>
+                        <textarea id="mejora_politica" name="mejora_politica"></textarea>
+                    </div>
+                </div>
+
+                <div class="question"><label class="question-title" for="cambio_principal">F5. Si pudiera cambiar UNA SOLA COSA relacionada con el uso de la tecnología en su trabajo para mejorar su bienestar, ¿cuál sería?</label><textarea id="cambio_principal" name="cambio_principal"></textarea></div>
+                <div class="question"><label class="question-title" for="sugerencias_adicionales">F6. ¿Tiene alguna otra sugerencia, comentario o preocupación sobre el uso de la tecnología, el tecnoestrés o el bienestar digital en la empresa que no se haya abordado?</label><textarea id="sugerencias_adicionales" name="sugerencias_adicionales"></textarea></div>
+            </div>
+
+            <div id="navigation-controls">
+                <button type="button" id="prev-btn" style="display: none;">Anterior</button>
+                <button type="button" id="next-btn">Siguiente</button>
+                <button type="submit" id="submit-btn" style="display: none;">Finalizar Cuestionario</button>
+            </div>
+        </form>
+
+        <div id="thank-you-message" style="display: none; text-align: center; margin-top: 2rem; padding: 2rem; background-color: var(--secondary-color); border: 1px solid var(--line-color);">
+            <h3>¡Muchas gracias por su valioso tiempo y su detallada colaboración!</h3>
+            <p><em>Su contribución es fundamental para construir un entorno laboral digital más saludable.</em></p>
+        </div>
+        <div id="form-status" style="display: none; text-align: center; margin-top: 1rem; padding: 1rem; background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24;"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pages = Array.from(document.querySelectorAll('.survey-page'));
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const form = document.getElementById('native-survey-form');
+            const surveyRoot = document.getElementById('survey-root');
+            const thankYouMessage = document.getElementById('thank-you-message');
+            const formStatus = document.getElementById('form-status');
+            let currentPageIndex = 0;
+
+            function showPage(pageIndex) {
+                pages.forEach((page, index) => {
+                    page.style.display = index === pageIndex ? 'block' : 'none';
+                });
+                prevBtn.style.display = pageIndex === 0 ? 'none' : 'inline-block';
+                nextBtn.style.display = pageIndex === pages.length - 1 ? 'none' : 'inline-block';
+                submitBtn.style.display = pageIndex === pages.length - 1 ? 'inline-block' : 'none';
+                window.scrollTo(0, 0);
+            }
+
+            nextBtn.addEventListener('click', () => {
+                if (currentPageIndex < pages.length - 1) {
+                    currentPageIndex++;
+                    showPage(currentPageIndex);
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentPageIndex > 0) {
+                    currentPageIndex--;
+                    showPage(currentPageIndex);
+                }
+            });
+
+            // --- Conditional Logic ---
+            const personasACargoQuestion = document.getElementById('personas_a_cargo_question');
+            document.querySelectorAll('input[name="nivel_responsabilidad"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    personasACargoQuestion.style.display = e.target.value !== 'Empleado/a sin personas a cargo' ? 'block' : 'none';
+                });
+            });
+
+            const porcentajeHibridoQuestion = document.getElementById('porcentaje_hibrido_question');
+            document.querySelectorAll('input[name="modalidad_trabajo"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    porcentajeHibridoQuestion.style.display = e.target.value === 'hibrido' ? 'block' : 'none';
+                });
+            });
+
+
+            // --- Form Submission ---
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+
+                // Optional: You could re-introduce nested objects for Formspree if needed,
+                // but flat structure with unique names also works well.
+                // console.log("Survey results: " + JSON.stringify(data, null, 2));
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Enviando...';
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: JSON.stringify(data),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Hide form and show thank you message
+                        form.style.display = 'none';
+                        document.querySelector('.survey-title').style.display = 'none';
+                        document.querySelector('.survey-description').style.display = 'none';
+                        thankYouMessage.style.display = 'block';
+                        formStatus.style.display = 'none';
+                    } else {
+                        const responseData = await response.json();
+                        if (Object.hasOwn(responseData, 'errors')) {
+                            formStatus.textContent = responseData.errors.map(error => error.message).join(", ");
+                        } else {
+                            formStatus.textContent = "Oops! Hubo un problema al enviar el formulario.";
+                        }
+                        formStatus.style.display = 'block';
+                    }
+                } catch (error) {
+                    formStatus.textContent = "Oops! Hubo un problema al enviar el formulario.";
+                    formStatus.style.display = 'block';
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Finalizar Cuestionario';
+                }
+            });
+
+            // Show the first page initially
+            showPage(0);
+        });
+    </script>
+</body>
+</html>
