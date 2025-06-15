@@ -49,7 +49,14 @@
             padding: 1rem;
             background-color: #fff;
             border: 1px solid var(--line-color);
-            border-radius: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
         }
 
         .question-title {
@@ -135,20 +142,54 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
         #navigation-controls button:hover {
             opacity: 0.9;
         }
 
+        #navigation-controls button:active {
+            transform: scale(0.97);
+        }
+
         #submit-btn {
             background-color: #28a745; /* A distinct green for submission */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .survey-page[style*="display: block"] {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .question-conditional {
+            transition: opacity 0.4s ease, max-height 0.4s ease, margin 0.4s ease, padding 0.4s ease, border-width 0.2s ease;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            padding: 0 1rem;
+            margin: 0;
+            border-width: 0px;
+            box-shadow: none;
+        }
+
+        .question-conditional.visible {
+            max-height: 20rem; /* A reasonable max height */
+            opacity: 1;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-width: 1px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         @media (max-width: 768px) {
             body {
                 margin: 1rem auto;
-                padding: 0 0.5rem;
+                padding: 0 0.5rem 100px; /* Padding bottom for sticky nav */
             }
 
             .survey-title {
@@ -214,6 +255,12 @@
             .matrix-table td:nth-of-type(5)::before { content: "4"; font-weight: bold; margin-bottom: 5px; }
             .matrix-table td:nth-of-type(6)::before { content: "5"; font-weight: bold; margin-bottom: 5px; }
 
+            .matrix-table td input[type="radio"] {
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+            }
+
             /* Fix for other input groups */
              .multiple-text-item {
                 flex-direction: column;
@@ -232,12 +279,29 @@
             
              /* Stack navigation buttons */
             #navigation-controls {
-                flex-direction: column;
-                gap: 0.5rem;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                padding: 1rem;
+                border-top: 1px solid var(--line-color);
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+                z-index: 100;
+                flex-direction: row;
+                gap: 1rem;
             }
 
             #navigation-controls button {
                 width: 100%;
+                padding: 12px 20px;
+            }
+
+            #prev-btn {
+                background-color: var(--gray-text);
+                flex-grow: 0.5;
             }
         }
     </style>
@@ -304,7 +368,7 @@
                     <label><input type="radio" name="nivel_responsabilidad" value="Dirección"> Dirección</label>
                 </div>
 
-                <div class="question" id="personas_a_cargo_question" style="display:none;">
+                <div class="question question-conditional" id="personas_a_cargo_question">
                     <label class="question-title" for="personas_a_cargo">8. Número de personas a su cargo (si aplica):</label>
                     <input type="number" id="personas_a_cargo" name="personas_a_cargo" style="width: 20%;">
                 </div>
@@ -316,7 +380,7 @@
                     <label><input type="radio" name="modalidad_trabajo" value="remoto"> Remoto completo 100%</label>
                 </div>
                 
-                <div class="question multiple-text-group" data-group-name="porcentaje_hibrido" id="porcentaje_hibrido_question" style="display:none;">
+                <div class="question multiple-text-group question-conditional" id="porcentaje_hibrido_question">
                      <span class="question-title">Indique porcentaje aproximado presencial/remoto:</span>
                      <div class="multiple-text-item"><label for="porcentaje_hibrido_presencial">% Presencial</label><input type="number" name="porcentaje_hibrido_presencial" id="porcentaje_hibrido_presencial"></div>
                      <div class="multiple-text-item"><label for="porcentaje_hibrido_remoto">% Remoto</label><input type="number" name="porcentaje_hibrido_remoto" id="porcentaje_hibrido_remoto"></div>
@@ -560,10 +624,6 @@
             <p><em>Su contribución es fundamental para construir un entorno laboral digital más saludable.</em></p>
         </div>
         <div id="form-status" style="display: none; text-align: center; margin-top: 1rem; padding: 1rem; background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24;"></div>
-        
-        <div style="text-align: center; margin-top: 2rem; font-size: 0.8rem;">
-            <a href="#" id="open_preferences_center">Update cookies preferences</a>
-        </div>
     </div>
 
     <script>
@@ -606,14 +666,22 @@
             const personasACargoQuestion = document.getElementById('personas_a_cargo_question');
             document.querySelectorAll('input[name="nivel_responsabilidad"]').forEach(radio => {
                 radio.addEventListener('change', (e) => {
-                    personasACargoQuestion.style.display = e.target.value !== 'Empleado/a sin personas a cargo' ? 'block' : 'none';
+                    if (e.target.value !== 'Empleado/a sin personas a cargo') {
+                        personasACargoQuestion.classList.add('visible');
+                    } else {
+                        personasACargoQuestion.classList.remove('visible');
+                    }
                 });
             });
 
             const porcentajeHibridoQuestion = document.getElementById('porcentaje_hibrido_question');
             document.querySelectorAll('input[name="modalidad_trabajo"]').forEach(radio => {
                 radio.addEventListener('change', (e) => {
-                    porcentajeHibridoQuestion.style.display = e.target.value === 'hibrido' ? 'block' : 'none';
+                    if (e.target.value === 'hibrido') {
+                        porcentajeHibridoQuestion.classList.add('visible');
+                    } else {
+                        porcentajeHibridoQuestion.classList.remove('visible');
+                    }
                 });
             });
 
@@ -671,16 +739,5 @@
             showPage(0);
         });
     </script>
-    
-    <!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
-    <script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" charset="UTF-8"></script>
-    <script type="text/javascript" charset="UTF-8">
-    document.addEventListener('DOMContentLoaded', function () {
-    cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","palette":"dark","language":"es","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false,"website_name":"Cuestionario TFM"});
-    });
-    </script>
-    
-    <noscript>Free cookie consent management tool by <a href="https://www.termsfeed.com/">TermsFeed Generator</a></noscript>
-    <!-- End Cookie Consent by TermsFeed https://www.TermsFeed.com -->
 </body>
 </html>
